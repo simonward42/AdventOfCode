@@ -40,6 +40,10 @@ namespace AdventOfCode {
 				Console.WriteLine("Or type Q to quit");
 
 				choiceString = Console.ReadLine();
+				if (string.Equals(choiceString, "Q", StringComparison.CurrentCultureIgnoreCase)) {
+					quit = true;
+					return 0;
+				}
 				int.TryParse(choiceString, out choiceDay);
 			}
 
@@ -64,6 +68,16 @@ namespace AdventOfCode {
 					Console.WriteLine("\nSolving Day 3....");
 					Console.WriteLine($"Solution to part 1: {Day3.SolvePart1()}\n");
 					Console.WriteLine($"Solution to part 2: {Day3.SolvePart2()}\n");
+					break;
+
+				case 4:
+					Console.WriteLine("\nSolving Day 4....");
+
+					var day4 = new Day4();
+					Console.WriteLine($"Solution to part 1: {day4.Solve(1)}\n");
+
+					day4.RefreshInput();
+					Console.WriteLine($"Solution to part 2: {day4.Solve(2)}\n");
 					break;
 
 				default:
