@@ -80,6 +80,36 @@ namespace AdventOfCode {
 					Console.WriteLine($"Solution to part 2: {day4.Solve(2)}\n");
 					break;
 
+				case 5:
+					Console.WriteLine("\nSolving Day 5....");
+
+					var day5 = new Day5();
+					Console.WriteLine($"Solution to part 1: {day5.Solve()}\n");
+
+					day5.RefreshInput();
+					Console.WriteLine($"Solution to part 2: {day5.SolvePart2()}\n");
+					break;
+
+				case 6:
+					Console.WriteLine("\nSolving Day 6....");
+
+					var day6 = new Day6();
+					Console.WriteLine($"Solution to part 1: {day6.Solve()}\n");
+
+					day6.RefreshInput();
+					Console.WriteLine($"Solution to part 2: {day6.SolvePart2()}\n");
+					break;
+
+				case 7:
+					Console.WriteLine("\nSolving Day 7....");
+
+					var day7 = new Day7();
+					Console.WriteLine($"Solution to part 1: {day7.Solve()}\n");
+
+					day7.RefreshInput();
+					Console.WriteLine($"Solution to part 2: {day7.SolvePart2()}\n");
+					break;
+
 				default:
 					break;
 			}
