@@ -26,6 +26,7 @@ namespace AdventOfCode {
 
 			Console.WriteLine("Which day's solution would you like to run? Type a number from 1 - 25...");
 			Console.WriteLine("Alternatively, type Q to quit");
+			Console.WriteLine("...or try X for fun bonus stuff!");
 
 			choiceString = Console.ReadLine();
 			if (string.Equals(choiceString, "Q", StringComparison.CurrentCultureIgnoreCase)) {
@@ -33,11 +34,15 @@ namespace AdventOfCode {
 				return 0;
 			}
 
+			if (string.Equals(choiceString, "X", StringComparison.CurrentCultureIgnoreCase)) {
+				return 99;
+			}
+
 			int.TryParse(choiceString, out int choiceDay);
 
 			while (choiceDay < 1 || choiceDay > 25) {
 				Console.WriteLine("\nSorry, didn't quite catch that; please enter a number between 1 and 25 (inclusive)...");
-				Console.WriteLine("Or type Q to quit");
+				Console.WriteLine("Or type Q to quit (X for fun stuff!)");
 
 				choiceString = Console.ReadLine();
 				if (string.Equals(choiceString, "Q", StringComparison.CurrentCultureIgnoreCase)) {
@@ -108,6 +113,29 @@ namespace AdventOfCode {
 
 					day7.RefreshInput();
 					Console.WriteLine($"Solution to part 2: {day7.SolvePart2()}\n");
+					break;
+
+				case 99:
+					Console.WriteLine("\nDoing custom fun stuff....");
+
+					var quiz = new Quiz();
+					Console.WriteLine($"Number of occurrences of \"make it so\" in all of TNG: {quiz.FindInTng("make it so")}");
+					
+					quiz = new Quiz();
+					Console.WriteLine($"Number of occurrences of \"earl grey\" in all of TNG: {quiz.FindInTng("earl grey")}");
+
+					quiz = new Quiz();
+					Console.WriteLine($"Number of occurrences of \"earl grey hot\" in all of TNG: {quiz.FindInTng("earl grey hot")}");
+
+					quiz = new Quiz();
+					Console.WriteLine($"Number of occurrences of \"tea earl grey hot\" in all of TNG: {quiz.FindInTng("tea earl grey hot")}");
+
+					quiz = new Quiz();
+					Console.WriteLine($"Number of occurrences of \"shut up\" in all of TNG: {quiz.FindInTng("shut up")}");
+
+					quiz = new Quiz();
+					Console.WriteLine($"Number of occurrences of \"shut up wesley\" in all of TNG: {quiz.FindInTng("shut up wesley")}");
+
 					break;
 
 				default:
