@@ -1,4 +1,4 @@
-﻿namespace AdventOfCode2023.Util;
+﻿namespace Shared.Util;
 
 public class InputStringReader : InputTextReader, IInputReader
 {

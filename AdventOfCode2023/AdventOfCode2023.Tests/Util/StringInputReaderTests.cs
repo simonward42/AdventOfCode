@@ -1,6 +1,6 @@
-using AdventOfCode2023.Util;
-
 using FluentAssertions.Execution;
+
+using Shared.Util;
 
 namespace AdventOfCode2023.Tests.Util;
 

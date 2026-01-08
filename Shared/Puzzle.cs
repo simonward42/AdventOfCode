@@ -1,6 +1,6 @@
-﻿using AdventOfCode2023.Util;
+﻿namespace Shared;
 
-namespace AdventOfCode2023;
+using Shared.Util;
 
 public abstract class Puzzle<TAnswer> : IDisposable
 {

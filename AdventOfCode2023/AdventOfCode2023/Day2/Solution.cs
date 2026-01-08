@@ -1,5 +1,7 @@
 ﻿using System.Text.RegularExpressions;
 
+using Shared;
+
 namespace AdventOfCode2023.Day2;
 
 public class Solution : Puzzle<int>
