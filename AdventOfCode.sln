@@ -1,13 +1,21 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 18
-VisualStudioVersion = 18.1.11312.151 d18.0
+VisualStudioVersion = 18.1.11312.151
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdventOfCode2023", "AdventOfCode2023\AdventOfCode2023\AdventOfCode2023.csproj", "{8703D886-8589-441D-B9F6-5F8E54676EEC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdventOfCode2023.Tests", "AdventOfCode2023\AdventOfCode2023.Tests\AdventOfCode2023.Tests.csproj", "{245DA907-9EA1-45A4-B2D3-F54F86AA040A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared", "Shared\Shared.csproj", "{C5C8DE6C-31D1-4B7E-B99F-F4ABE0D25CCD}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2023", "2023", "{2F2C425C-48CC-465C-9277-676E4F5BD329}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2025", "2025", "{DE33FAA3-627A-43BA-9CB4-202235BC1A22}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AoC25", "2025\AoC25\AoC25.csproj", "{8F9832BD-1CAD-49C1-8FF4-1CB097CCD049}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AoC25.Tests", "2025\AoC25.Tests\AoC25.Tests.csproj", "{B21ED412-88D3-4ED8-8655-3F2550E04FCE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,9 +35,23 @@ Global
 		{C5C8DE6C-31D1-4B7E-B99F-F4ABE0D25CCD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C5C8DE6C-31D1-4B7E-B99F-F4ABE0D25CCD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C5C8DE6C-31D1-4B7E-B99F-F4ABE0D25CCD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8F9832BD-1CAD-49C1-8FF4-1CB097CCD049}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8F9832BD-1CAD-49C1-8FF4-1CB097CCD049}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8F9832BD-1CAD-49C1-8FF4-1CB097CCD049}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8F9832BD-1CAD-49C1-8FF4-1CB097CCD049}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B21ED412-88D3-4ED8-8655-3F2550E04FCE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B21ED412-88D3-4ED8-8655-3F2550E04FCE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B21ED412-88D3-4ED8-8655-3F2550E04FCE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B21ED412-88D3-4ED8-8655-3F2550E04FCE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{8703D886-8589-441D-B9F6-5F8E54676EEC} = {2F2C425C-48CC-465C-9277-676E4F5BD329}
+		{245DA907-9EA1-45A4-B2D3-F54F86AA040A} = {2F2C425C-48CC-465C-9277-676E4F5BD329}
+		{8F9832BD-1CAD-49C1-8FF4-1CB097CCD049} = {DE33FAA3-627A-43BA-9CB4-202235BC1A22}
+		{B21ED412-88D3-4ED8-8655-3F2550E04FCE} = {DE33FAA3-627A-43BA-9CB4-202235BC1A22}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5B70070F-544D-4317-9C5F-4BC4CB01AC33}
