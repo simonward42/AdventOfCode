@@ -29,8 +29,8 @@ public class SolutionTests
 	[Test]
 	public void TestPart2()
 	{
-		//var expectedAnswer = 3;
-		//var actualAnswer = _sut.GetPart2Answer();
-		//actualAnswer.Should().Be(expectedAnswer);
+		var expectedAnswer = 6;
+		var actualAnswer = _sut.GetPart2Answer();
+		actualAnswer.Should().Be(expectedAnswer);
 	}
 }

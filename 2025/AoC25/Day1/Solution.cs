@@ -1,6 +1,4 @@
-﻿using System.Text.RegularExpressions;
-
-namespace AoC25.Day1;
+﻿namespace AoC25.Day1;
 
 public class Solution : Puzzle<int>
 {
@@ -14,35 +12,13 @@ public class Solution : Puzzle<int>
 	//how many times does the dial land on 0?
 	protected override int SolvePart1()
 	{
-		int dial = 50;
-		int zeroCount = 0;
-		var turnRegex = new Regex(@"([LR])(\d+)");
+		var dial = new Dial();
 		while (InputReader.TryReadLine(out string? currentLine))
 		{
-			var turn = turnRegex.Match(currentLine);
-			if (!turn.Success)
-			{
-				throw new Exception("Parse error");
-			}
-			var dir = turn.Groups[1].Value;
-			var dist = int.Parse(turn.Groups[2].Value);
-
-			switch (dir)
-			{
-				case "L":
-					dial = (dial - dist) % 100;
-					if (dial == 0) zeroCount++;
-					break;
-				case "R":
-					dial = (dial + dist) % 100;
-					if (dial == 0) zeroCount++;
-					break;
-				default:
-					break;
-			}
+			dial.Turn(currentLine);
 		}
 
-		return zeroCount;
+		return dial.ZeroesLandedOn;
 	}
 
 	//how many times does the dial pass through 0?
@@ -54,15 +30,5 @@ public class Solution : Puzzle<int>
 		}
 
 		return 2;
-	}
-}
-
-public class Dial
-{
-	int _dial;
-
-	public Dial()
-	{
-		_dial = 50;
 	}
 }
