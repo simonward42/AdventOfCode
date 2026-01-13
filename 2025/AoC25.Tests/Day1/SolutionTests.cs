@@ -10,6 +10,7 @@ public class SolutionTests
 	public void Setup()
 	{
 		_sut = new Solution();
+		Dial.Verbose = true;
 	}
 
 	[TearDown]
@@ -23,7 +24,7 @@ public class SolutionTests
 	{
 		var expectedAnswer = 3;
 		var actualAnswer = _sut.GetPart1Answer();
-		actualAnswer.Should().Be(expectedAnswer);
+		Assert.That(actualAnswer, Is.EqualTo(expectedAnswer));
 	}
 
 	[Test]
@@ -31,6 +32,13 @@ public class SolutionTests
 	{
 		var expectedAnswer = 6;
 		var actualAnswer = _sut.GetPart2Answer();
-		actualAnswer.Should().Be(expectedAnswer);
+		Assert.That(actualAnswer, Is.EqualTo(expectedAnswer));
+	}
+
+
+	[Test]
+	public void sdlkfjsfd()
+	{
+		Console.WriteLine(10.01 % 10);
 	}
 }

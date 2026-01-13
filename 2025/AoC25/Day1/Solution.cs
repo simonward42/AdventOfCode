@@ -15,20 +15,21 @@ public class Solution : Puzzle<int>
 		var dial = new Dial();
 		while (InputReader.TryReadLine(out string? currentLine))
 		{
-			dial.Turn(currentLine);
+			dial.Turn1(currentLine);
 		}
 
-		return dial.ZeroesLandedOn;
+		return dial.Part1Answer;
 	}
 
 	//how many times does the dial pass through 0?
 	protected override int SolvePart2()
 	{
+		var dial = new Dial();
 		while (InputReader.TryReadLine(out string? currentLine))
 		{
-
+			dial.Turn2(currentLine);
 		}
 
-		return 2;
+		return dial.Part2Answer;
 	}
 }
