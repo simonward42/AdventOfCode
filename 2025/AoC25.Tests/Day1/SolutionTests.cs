@@ -22,7 +22,7 @@ public class SolutionTests
 	[Test]
 	public void TestPart1()
 	{
-		var expectedAnswer = 3;
+		var expectedAnswer = 982;
 		var actualAnswer = _sut.GetPart1Answer();
 		Assert.That(actualAnswer, Is.EqualTo(expectedAnswer));
 	}
@@ -30,15 +30,8 @@ public class SolutionTests
 	[Test]
 	public void TestPart2()
 	{
-		var expectedAnswer = 6;
+		var expectedAnswer = 6106;
 		var actualAnswer = _sut.GetPart2Answer();
 		Assert.That(actualAnswer, Is.EqualTo(expectedAnswer));
-	}
-
-
-	[Test]
-	public void sdlkfjsfd()
-	{
-		Console.WriteLine(10.01 % 10);
 	}
 }

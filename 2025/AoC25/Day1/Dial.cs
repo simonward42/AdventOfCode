@@ -1,49 +1,22 @@
-﻿using System.Text.RegularExpressions;
-
-namespace AoC25.Day1;
+﻿namespace AoC25.Day1;
 
 public class Dial
 {
 	int _dial = 50;
 	int _zeroesCount = 0;
 	int _zeroesPassedThrough = 0;
-	Regex _turnRegex = new Regex(@"([LR])(\d+)");
 
-	public int DialPosition => _dial;
-	public int ZeroesLandedOn => _zeroesCount;
-	public int ZeroesPassedThrough => _zeroesPassedThrough;
-	public int Part1Answer => _zeroesCount;
-	public int Part2Answer => _zeroesCount;
+	public int ZeroCount => _zeroesCount;
+
 	public static bool Verbose { get; set; } = false;
 
-	public void Turn1(string turnStr)
-	{
-		(var dir, var dist) = _ParseTurn(turnStr);
-		_Click(dir, dist);
-	}
-
-	public void Turn2(string turnStr)
-	{
-		(var dir, var dist) = _ParseTurn(turnStr);
-
-		// by clicking the dial for each step of the distance,
-		// the existing zeroes count should include any passed through zeroes
-		for (int i = 0; i < dist; i++)
-		{
-			_Click(dir, 1);
-		}
-	}
-	private (string dir, int dist) _ParseTurn(string turnStr)
-	{
-		var turn = _turnRegex.Match(turnStr);
-		if (!turn.Success)
-		{
-			throw new Exception("Parse error");
-		}
-		return (turn.Groups[1].Value, int.Parse(turn.Groups[2].Value));
-	}
-
-	private void _Click(string dir, int dist)
+	/// <summary>
+	/// Turns by the given number of "clicks" in the given direction.
+	/// Increments <see cref="ZeroCount"/> if the dial lands on 0 at the end of the turn./>
+	/// </summary>
+	/// <param name="dir">Either "L" or "R"</param>
+	/// <param name="dist">The number of "clicks" to turn by</param>
+	public void Turn(string dir, int dist)
 	{
 		switch (dir)
 		{
