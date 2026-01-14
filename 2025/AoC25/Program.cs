@@ -2,3 +2,4 @@
 using AoC = AoC25;
 
 Console.WriteLine($"{new AoC.Day1.Solution().SolvePretty()}");
+Console.WriteLine($"{new AoC.Day2.Solution().SolvePretty()}");

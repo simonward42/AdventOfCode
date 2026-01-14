@@ -8,4 +8,14 @@ public static class StringExtensions
 			.Where(char.IsDigit)
 			.Select(x => int.Parse(x.ToString()));
 	}
+
+	public static bool HasEvenLength(this string str)
+	{
+		return str.Length % 2 == 0;
+	}
+
+	public static bool HasOddLength(this string str)
+	{
+		return !str.HasEvenLength();
+	}
 }

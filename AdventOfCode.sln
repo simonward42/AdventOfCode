@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AoC25", "2025\AoC25\AoC25.c
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AoC25.Tests", "2025\AoC25.Tests\AoC25.Tests.csproj", "{B21ED412-88D3-4ED8-8655-3F2550E04FCE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared.Tests", "Shared.Tests\Shared.Tests.csproj", "{C7975889-8B1A-4E57-A67E-DDD8A2B7112C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,6 +45,10 @@ Global
 		{B21ED412-88D3-4ED8-8655-3F2550E04FCE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B21ED412-88D3-4ED8-8655-3F2550E04FCE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B21ED412-88D3-4ED8-8655-3F2550E04FCE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C7975889-8B1A-4E57-A67E-DDD8A2B7112C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C7975889-8B1A-4E57-A67E-DDD8A2B7112C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C7975889-8B1A-4E57-A67E-DDD8A2B7112C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C7975889-8B1A-4E57-A67E-DDD8A2B7112C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
