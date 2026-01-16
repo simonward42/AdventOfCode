@@ -27,10 +27,9 @@ public class SolutionTests
 	}
 
 	[Test]
-	[Ignore("Part 2 not yet implemented")]
 	public void TestPart2()
 	{
-		var expectedAnswer = 6106;
+		var expectedAnswer = 4174379265;
 		var actualAnswer = _sut.GetPart2Answer();
 		Assert.That(actualAnswer, Is.EqualTo(expectedAnswer));
 	}
