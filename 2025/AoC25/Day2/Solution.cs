@@ -1,4 +1,6 @@
 ﻿
+using System.Text.RegularExpressions;
+
 using Shared.Util;
 
 namespace AoC25.Day2;
@@ -18,6 +20,8 @@ public class Solution : Puzzle<long>
 		var ranges = InputReader.ReadLine().Split(',');
 		var invalidIds = new HashSet<long>();
 
+		var invalidRegex = new Regex(@"^(\d+?)\1$");
+
 		var rangeEnds = new string[2];
 		var rangeEndIds = new long[2];
 		foreach (var range in ranges)
@@ -31,33 +35,13 @@ public class Solution : Puzzle<long>
 
 			for (long id = rangeEndIds[0]; id <= rangeEndIds[1]; id++)
 			{
-				//do the isInvalid check and add to invalidIds
-				if (_IsATwoPeat(id.ToString()))
+				if (invalidRegex.IsMatch(id.ToString()))
 				{
 					invalidIds.Add(id);
 				}
 			}
 		}
-
-		//Console.WriteLine(string.Join("\n", ranges));
 		return invalidIds.Sum();
-	}
-
-	/// <summary>
-	/// By 2-peat I mean a sequence repeated e.g. 123123 
-	/// </summary>
-	/// <param name="id"></param>
-	/// <returns></returns>
-	private static bool _IsATwoPeat(string idStr)
-	{
-		//invalid IDs all have an even number of digits
-		if (idStr.HasOddLength())
-			return false;
-
-		var firstHalf = idStr[..(idStr.Length / 2)];
-		var secondHalf = idStr[(idStr.Length / 2)..];
-		//Console.WriteLine($"{idStr}: {firstHalf} {secondHalf}");
-		return firstHalf == secondHalf;
 	}
 
 	//ids are now invalid if they are made solely of sequences repeated *at least* twice
@@ -73,6 +57,8 @@ public class Solution : Puzzle<long>
 		var ranges = InputReader.ReadLine().Split(',');
 		var invalidIds = new HashSet<long>();
 
+		var invalidRegex = new Regex(@"^(\d+?)\1+$");
+
 		var rangeEnds = new string[2];
 		var rangeEndIds = new long[2];
 		foreach (var range in ranges)
@@ -83,71 +69,12 @@ public class Solution : Puzzle<long>
 
 			for (long id = rangeEndIds[0]; id <= rangeEndIds[1]; id++)
 			{
-				var idStr = id.ToString();
-				if (_IsATwoPeat(idStr) || _IsAThreePeat(idStr) || _IsAFivePeat(idStr) || _IsASevenPeat(idStr))
+				if (invalidRegex.IsMatch(id.ToString()))
 				{
 					invalidIds.Add(id);
 				}
 			}
 		}
-
 		return invalidIds.Sum();
-	}
-
-	private static bool _IsAThreePeat(string idStr)
-	{
-		if (idStr.Length % 3 != 0)
-			return false;
-
-		var thirdLen = idStr.Length / 3;
-
-		var firstThird = idStr[..thirdLen];
-		var secondThird = idStr[thirdLen..(2 * thirdLen)];
-		var thirdThird = idStr[(2 * thirdLen)..];
-
-		return (firstThird == secondThird)
-			&& (secondThird == thirdThird);
-	}
-
-	private static bool _IsAFivePeat(string idStr)
-	{
-		if (idStr.Length % 5 != 0)
-			return false;
-
-		var fifthLen = idStr.Length / 5;
-
-		var firstFifth = idStr[..fifthLen];
-		var secondFifth = idStr[fifthLen..(2 * fifthLen)];
-		var thirdFifth = idStr[(2 * fifthLen)..(3 * fifthLen)];
-		var fourthFifth = idStr[(3 * fifthLen)..(4 * fifthLen)];
-		var fifthFifth = idStr[(4 * fifthLen)..];
-
-		return (firstFifth == secondFifth)
-			&& (secondFifth == thirdFifth)
-			&& (thirdFifth == fourthFifth)
-			&& (fourthFifth == fifthFifth);
-	}
-
-	private static bool _IsASevenPeat(string idStr)
-	{
-		if (idStr.Length % 7 != 0)
-			return false;
-
-		var seventhLen = idStr.Length / 7;
-
-		var firstSeventh = idStr[..seventhLen];
-		var secondSeventh = idStr[seventhLen..(2 * seventhLen)];
-		var thirdSeventh = idStr[(2 * seventhLen)..(3 * seventhLen)];
-		var fourthSeventh = idStr[(3 * seventhLen)..(4 * seventhLen)];
-		var fifthSeventh = idStr[(4 * seventhLen)..(5 * seventhLen)];
-		var sixthSeventh = idStr[(5 * seventhLen)..(6 * seventhLen)];
-		var sevenSeventh = idStr[(6 * seventhLen)..];
-
-		return (firstSeventh == secondSeventh)
-			&& (firstSeventh == thirdSeventh)
-			&& (firstSeventh == fourthSeventh)
-			&& (firstSeventh == fifthSeventh)
-			&& (firstSeventh == sixthSeventh)
-			&& (firstSeventh == sevenSeventh);
 	}
 }
