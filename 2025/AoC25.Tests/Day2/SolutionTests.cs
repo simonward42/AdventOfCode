@@ -21,7 +21,7 @@ public class SolutionTests
 	[Test]
 	public void TestPart1()
 	{
-		var expectedAnswer = 1227775554;
+		var expectedAnswer = 32976912643;
 		var actualAnswer = _sut.GetPart1Answer();
 		Assert.That(actualAnswer, Is.EqualTo(expectedAnswer));
 	}
@@ -29,7 +29,7 @@ public class SolutionTests
 	[Test]
 	public void TestPart2()
 	{
-		var expectedAnswer = 4174379265;
+		var expectedAnswer = 54446379122;
 		var actualAnswer = _sut.GetPart2Answer();
 		Assert.That(actualAnswer, Is.EqualTo(expectedAnswer));
 	}
