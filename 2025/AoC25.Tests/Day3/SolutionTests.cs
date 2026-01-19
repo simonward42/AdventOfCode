@@ -21,6 +21,12 @@ public class SolutionTests
 	[Test]
 	public void TestPart1()
 	{
+		var test = "123456789";
+		for (int i = 0; i < test.Length - 1; i++)
+		{
+			Console.WriteLine($"{test[i]} < {test[i + 1]}: {test[i] < test[i + 1]}");
+		}
+
 		var expectedAnswer = 357;
 		var actualAnswer = _sut.GetPart1Answer();
 		Assert.That(actualAnswer, Is.EqualTo(expectedAnswer));
