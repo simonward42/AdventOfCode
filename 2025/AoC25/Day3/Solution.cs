@@ -1,8 +1,10 @@
-﻿namespace AoC25.Day3;
+﻿using Shared.Util;
+
+namespace AoC25.Day3;
 
 public class Solution : Puzzle<int>
 {
-	public Solution() : base(3)
+	public Solution(IInputReader? reader = null) : base(3, reader)
 	{
 	}
 
