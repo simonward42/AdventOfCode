@@ -7,10 +7,12 @@ public class Solution(IInputReader? reader = null) : Puzzle<int>(4, reader)
 	//count the number of paper rolls ('@') in the input with fewer than 4 rolls in the eight adjacent positions
 	protected override int SolvePart1()
 	{
-		var rows = InputReader.ReadUntilEmptyLine();
+		var rows = InputReader.ReadUntilEmptyLine()
+			.Select(x => x.ToCharArray())
+			.ToArray();
 		var accessibleRollsCount = 0;
 
-		string row;
+		char[] row;
 		for (var y = 0; y < rows.Length; y++)
 		{
 			row = rows[y];
@@ -26,7 +28,7 @@ public class Solution(IInputReader? reader = null) : Puzzle<int>(4, reader)
 		return accessibleRollsCount;
 	}
 
-	private int _AdjacentRollsCount(string[] rows, int x, int y, int rowLength)
+	private int _AdjacentRollsCount(char[][] rows, int x, int y, int rowLength)
 	{
 		var rollsCount = 0;
 		for (int j = y - 1; j <= y + 1; j++)
@@ -50,14 +52,36 @@ public class Solution(IInputReader? reader = null) : Puzzle<int>(4, reader)
 		return rollsCount;
 	}
 
-	//description
+	//same as above, but remove accessible rolls on each scan, and repeat until no more
+	//rolls are accessible. return the total number of rolls removed
 	protected override int SolvePart2()
 	{
-		while (InputReader.TryReadLine(out string? currentLine))
+		var rows = InputReader.ReadUntilEmptyLine()
+			.Select(x => x.ToCharArray())
+			.ToArray();
+		var removedRollsCount = 0;
+		int removedThisIter;
+
+		char[] row;
+		do
 		{
+			removedThisIter = 0;
+			for (var y = 0; y < rows.Length; y++)
+			{
+				row = rows[y];
+				for (var x = 0; x < row.Length; x++)
+				{
+					if (row[x] == '@' && _AdjacentRollsCount(rows, x, y, row.Length) < 4)
+					{
+						//roll at [x,y] is accessible, remove it:
+						rows[y][x] = 'X';
+						removedThisIter++;
+					}
+				}
+			}
+			removedRollsCount += removedThisIter;
+		} while (removedThisIter > 0);
 
-		}
-
-		return 0;
+		return removedRollsCount;
 	}
 }
