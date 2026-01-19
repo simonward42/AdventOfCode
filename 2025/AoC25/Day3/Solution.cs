@@ -25,12 +25,25 @@ public class Solution : Puzzle<long>
 		return totalJoltage;
 	}
 
+	//same as part 1, but this time we're finding 12-digit numbers
+	protected override long SolvePart2()
+	{
+		long totalJoltage = 0;
+		while (InputReader.TryReadLine(out string? currentLine))
+		{
+			var joltage = long.Parse(_LargestNumberOfLength(currentLine, length: 12));
+			totalJoltage += joltage;
+		}
+
+		return totalJoltage;
+	}
+
 	private string _LargestNumberOfLength(string str, int length)
 	{
 		if (length == 0)
 			return "";
 
-		//excluding the final length-1 of the line, find the largest digit for the most significant decimal place
+		//excluding the final length-1 of the line, find the largest digit for the most significant digit
 		int msdIndex = 0;
 		char msd = str[msdIndex];
 
@@ -46,17 +59,5 @@ public class Solution : Puzzle<long>
 		var joltage = msd + _LargestNumberOfLength(str[(msdIndex + 1)..], length - 1);
 
 		return joltage;
-	}
-
-	//same as part 1, but this time we're finding 12-digit numbers
-	protected override long SolvePart2()
-	{
-		long totalJoltage = 0;
-		while (InputReader.TryReadLine(out string? currentLine))
-		{
-
-		}
-
-		return totalJoltage;
 	}
 }
