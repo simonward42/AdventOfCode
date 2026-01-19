@@ -45,11 +45,11 @@ public class SolutionTests
 		Assert.That(actualAnswer, Is.EqualTo(expectedAnswer));
 	}
 
-	[Test, Ignore("not implemented yet")]
+	[Test]
 	public void TestPart2()
 	{
-		//var expectedAnswer = 54446379122;
-		//var actualAnswer = _sut.GetPart2Answer();
-		//Assert.That(actualAnswer, Is.EqualTo(expectedAnswer));
+		var expectedAnswer = 3121910778619;
+		var actualAnswer = _sut.GetPart2Answer();
+		Assert.That(actualAnswer, Is.EqualTo(expectedAnswer));
 	}
 }
