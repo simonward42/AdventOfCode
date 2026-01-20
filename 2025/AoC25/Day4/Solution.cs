@@ -66,6 +66,7 @@ public class Solution(IInputReader? reader = null) : Puzzle<int>(4, reader)
 		do
 		{
 			removedThisIter = 0;
+			var toRemove = new List<Point2d>();
 			for (var y = 0; y < rows.Length; y++)
 			{
 				row = rows[y];
@@ -73,11 +74,16 @@ public class Solution(IInputReader? reader = null) : Puzzle<int>(4, reader)
 				{
 					if (row[x] == '@' && _AdjacentRollsCount(rows, x, y, row.Length) < 4)
 					{
-						//roll at [x,y] is accessible, remove it:
-						rows[y][x] = 'X';
+						//roll at [x,y] is accessible, add it to remove:
+						toRemove.Add(new(x, y));
 						removedThisIter++;
 					}
 				}
+			}
+			//remove all accessible:
+			foreach (var point in toRemove)
+			{
+				rows[point.Y][point.X] = 'X';
 			}
 			removedRollsCount += removedThisIter;
 		} while (removedThisIter > 0);

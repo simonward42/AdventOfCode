@@ -45,7 +45,7 @@ public class SolutionTests
 		Assert.That(actualAnswer, Is.EqualTo(expectedAnswer));
 	}
 
-	[Test, CancelAfter(0)]
+	[Test]
 	public void TestPart2()
 	{
 		var expectedAnswer = 43;
@@ -53,13 +53,13 @@ public class SolutionTests
 		Assert.That(actualAnswer, Is.EqualTo(expectedAnswer));
 	}
 
-	//[Test]
-	//public void TestPart2_RealInput()
-	//{
-	//	_sut = new Solution(_realInput);
+	[Test]
+	public void TestPart2_RealInput()
+	{
+		_sut = new Solution(_realInput);
 
-	//	var expectedAnswer = 171435596092638;
-	//	var actualAnswer = _sut.GetPart2Answer();
-	//	Assert.That(actualAnswer, Is.EqualTo(expectedAnswer));
-	//}
+		var expectedAnswer = 8707;
+		var actualAnswer = _sut.GetPart2Answer();
+		Assert.That(actualAnswer, Is.EqualTo(expectedAnswer));
+	}
 }
