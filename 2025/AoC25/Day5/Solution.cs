@@ -4,49 +4,57 @@ using System.Text.RegularExpressions;
 
 using Shared.Util;
 
-public class Solution(IInputReader? reader = null) : Puzzle<int>(5, reader)
+public class Solution : Puzzle<int>
 {
-	//input: ranges of fresh ingredient IDs; blank line; list of available ingredient IDs
-	//return the number of available ingredient IDs that are fresh
-	protected override int SolvePart1()
-	{
-		var freshCount = 0;
+	private List<InclusiveRange<ulong>> _ranges;
 
-		//read and parse the fresh ranges somehow
-		//ranges can overlap. while building the list we could combine overlapping ranges to reduce the number we compare against.
+	public Solution(IInputReader? reader = null) : base(5, reader)
+	{
 		var rangesInput = InputReader.ReadUntilEmptyLine();
-		var ranges = new List<Range<ulong>>();
+
+		if (_ranges != null) return;
+
+		_ranges = [];
 		var rangeRegex = new Regex(@"(\d+)-(\d+)");
 		Match match;
 		foreach (var line in rangesInput)
 		{
 			match = rangeRegex.Match(line);
-			ranges.Add(new(
+			_ranges.Add(new(
 				min: ulong.Parse(match.Groups[1].Value),
 				max: ulong.Parse(match.Groups[2].Value)));
 		}
+	}
+
+	//input: ranges of fresh ingredient IDs; blank line; list of available ingredient IDs
+	//return the number of available ingredient IDs that are fresh
+	protected override int SolvePart1()
+	{
+		var freshIngredientCount = 0;
 
 		//loop thru the id list, compare with ranges and count those that fall within
+		InputReader.ReadUntilEmptyLine();
 		while (InputReader.TryReadLine(out string? currentLine))
 		{
 			var currentId = ulong.Parse(currentLine);
-			if (ranges.Any(r => r.ContainsInclusive(currentId)))
+			if (_ranges.Any(r => r.Contains(currentId)))
 			{
-				freshCount++;
+				freshIngredientCount++;
 			}
 		}
 
-		return freshCount;
+		return freshIngredientCount;
 	}
 
-	//description
+	//now the second part of the input is irrelevant - we need to return a count of all the IDs included
+	//in the ranges. numbers could get big here...
 	protected override int SolvePart2()
 	{
-		while (InputReader.TryReadLine(out string? currentLine))
-		{
+		var freshIdCount = 0;
 
-		}
+		//merge ranges until there are no more overlapping
+		//then sum the sizes of all ranges
 
-		return 0;
+		return freshIdCount;
 	}
 }
