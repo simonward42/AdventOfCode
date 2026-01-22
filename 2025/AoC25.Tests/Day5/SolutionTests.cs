@@ -53,13 +53,22 @@ public class SolutionTests
 		Assert.That(actualAnswer, Is.EqualTo(expectedAnswer));
 	}
 
-	//[Test]
-	//public void TestPart2_RealInput()
-	//{
-	//	_sut = new Solution(_realInput);
+	[Test]
+	public void TestPart2_TransitiveMerge()
+	{
+		_sut = new Solution(new InputFileReader(@"Day5/more_examples.txt"));
+		var expectedAnswer = 10;
+		var actualAnswer = _sut.GetPart2Answer();
+		Assert.That(actualAnswer, Is.EqualTo(expectedAnswer));
+	}
 
-	//	var expectedAnswer = 8707;
-	//	var actualAnswer = _sut.GetPart2Answer();
-	//	Assert.That(actualAnswer, Is.EqualTo(expectedAnswer));
-	//}
+	[Test]
+	public void TestPart2_RealInput()
+	{
+		_sut = new Solution(_realInput);
+
+		var expectedAnswer = 342433357244012;
+		var actualAnswer = _sut.GetPart2Answer();
+		Assert.That(actualAnswer, Is.EqualTo(expectedAnswer));
+	}
 }

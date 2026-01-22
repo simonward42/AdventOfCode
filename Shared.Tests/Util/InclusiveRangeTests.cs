@@ -66,26 +66,54 @@ public class InclusiveRangeTests
 	}
 
 	[Test]
-	public void Merge_TODO()
+	public void Merge_ThrowsErrorWhenRangesDoNotOverlap()
 	{
 		var rangeA = new InclusiveRange<int>(1, 10);
-		var rangeB = new InclusiveRange<int>(5, 15);
+		var rangeB = new InclusiveRange<int>(11, 15);
 
-		var merged = rangeA.Merge(rangeB);
+		Assert.That(() => rangeA.Merge(rangeB),
+			Throws.InstanceOf<InvalidOperationException>());
+	}
 
-		Assert.That(merged.Min, Is.EqualTo(1));
-		Assert.That(merged.Max, Is.EqualTo(15));
+	[TestCaseSource(nameof(MergeTestCases))]
+	public InclusiveRange<int> Merge_ReturnsCombinedRange_OfOverlappingRanges(
+		InclusiveRange<int> rangeA,
+		InclusiveRange<int> rangeB)
+	{
+		return rangeA.Merge(rangeB);
+	}
+
+	public static IEnumerable<TestCaseData> MergeTestCases
+	{
+		get
+		{
+			yield return new TestCaseData(
+				new InclusiveRange<int>(2, 6),
+				new InclusiveRange<int>(4, 9))
+				.Returns(new InclusiveRange<int>(2, 9));
+
+			yield return new TestCaseData(
+				new InclusiveRange<int>(2, 6),
+				new InclusiveRange<int>(-3, 5))
+				.Returns(new InclusiveRange<int>(-3, 6));
+
+			yield return new TestCaseData(
+				new InclusiveRange<int>(2, 6),
+				new InclusiveRange<int>(1, 7))
+				.Returns(new InclusiveRange<int>(1, 7));
+		}
 	}
 
 	[Test]
-	public void Merge_TODO_2()
+	public void MergeAll_ReturnsRangeWithMinimumMin_AndMaximumMax()
 	{
 		var rangeA = new InclusiveRange<int>(1, 10);
-		var rangeB = new InclusiveRange<int>(-5, 15);
+		var rangeB = new InclusiveRange<int>(-10, 5);
+		var rangec = new InclusiveRange<int>(6, 15);
 
-		var merged = rangeA.Merge(rangeB);
+		var expectedRange = new InclusiveRange<int>(-10, 15);
 
-		Assert.That(merged.Min, Is.EqualTo(-5));
-		Assert.That(merged.Max, Is.EqualTo(15));
+		Assert.That(() => rangeA.MergeAll([rangeB, rangec]),
+			Is.EqualTo(expectedRange));
 	}
 }
