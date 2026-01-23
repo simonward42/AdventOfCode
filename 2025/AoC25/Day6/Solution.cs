@@ -41,11 +41,49 @@ public class Solution(IInputReader? reader = null) : Puzzle<long>(6, reader)
 	//description
 	protected override long SolvePart2()
 	{
-		while (InputReader.TryReadLine(out string? currentLine))
-		{
+		var lines = InputReader.ReadUntilEmptyLine();
+		var operatorRx = new Regex(@"([+*]+)+");
+		var operators = operatorRx.Matches(lines.Last())
+			.Select(x => x.Value)
+			.ToArray();
 
+		//parse operands...
+		//for each operator we have a variable-length list of int operands
+		var operands = new List<long>[operators.Length];
+		var opIx = operands.Length - 1;
+		operands[opIx] = [];
+
+		for (var i = lines[0].Length - 1; i >= 0; i--)
+		{
+			var opString = "";
+
+			foreach (var line in lines[..(lines.Length - 1)])
+			{
+				opString += line[i];
+			}
+
+			if (opString.IsWhiteSpace())
+			{
+				opIx--;
+				operands[opIx] = [];
+			}
+			else
+			{
+				operands[opIx].Add(long.Parse(opString));
+			}
 		}
 
-		return 0;
+		long resultSum = 0;
+		for (var i = 0; i < operators.Length; i++)
+		{
+			resultSum += operators[i] switch
+			{
+				"+" => operands[i].Sum(),
+				"*" => operands[i].Aggregate((a, b) => a * b),
+				_ => throw new NotImplementedException()
+			};
+		}
+
+		return resultSum;
 	}
 }
