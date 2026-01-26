@@ -31,6 +31,13 @@ public abstract class InputTextReader : IDisposable
 		return nonEmptyLines.ToArray();
 	}
 
+	public char[][] ReadAs2dCharArray()
+	{
+		return ReadUntilEmptyLine()
+			.Select(s => s.ToCharArray())
+			.ToArray();
+	}
+
 	public abstract void Rewind();
 
 	public void Dispose() => Reader.Dispose();

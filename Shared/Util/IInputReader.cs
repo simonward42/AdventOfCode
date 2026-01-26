@@ -17,6 +17,8 @@ public interface IInputReader : IDisposable
 	/// </summary>
 	/// <exception cref="EndOfInputException">Thrown when the end of the input is reached before an empty line</exception>
 	string[] ReadUntilEmptyLine();
+
+	char[][] ReadAs2dCharArray();
 }
 
 [Serializable]
