@@ -1,19 +1,21 @@
 ﻿namespace AoC25.Day7;
 
+using System;
+
 using Shared.Util;
 
-public class Solution(IInputReader? reader = null) : Puzzle<int>(7, reader)
+public class Solution(IInputReader? reader = null) : Puzzle<long>(7, reader)
 {
-	private const char _splitter = '^';
-	private const char _beam = '|';
-	private const char _source = 'S';
-	private const char _empty = '.';
+	const char _splitter = '^';
+	const char _beam = '|';
+	const char _source = 'S';
+	const char _empty = '.';
 
 	public bool Draw { get; set; } = false;
 
 	//how many beam splitters are hit?
 	//OR, how many beams terminate on a splitter?
-	protected override int SolvePart1()
+	protected override long SolvePart1()
 	{
 		var field = InputReader.ReadAs2dCharArray();
 
@@ -73,14 +75,98 @@ public class Solution(IInputReader? reader = null) : Puzzle<int>(7, reader)
 		return propagatedBeams;
 	}
 
-	//description
-	protected override int SolvePart2()
+	//path integral (sort of?)
+	protected override long SolvePart2()
 	{
-		while (InputReader.TryReadLine(out string? currentLine))
-		{
+		var space = InputReader.ReadAs2dCharArray();
 
+		var field = new TachyonField(space);
+		field.Propagate();
+
+		for (int y = 0; y < space.Length - 1; y++)
+		{
+			if (Draw)
+			{
+				Console.WriteLine($"{field.Draw(y)}");
+			}
 		}
 
-		return 0;
+		return field.SumAmplitude(space.Length - 1);
+	}
+
+	class TachyonField
+	{
+		const char _splitter = '^';
+		const char _beam = '|';
+		const char _source = 'S';
+		const char _empty = '.';
+		readonly int _height;
+		readonly int _width;
+		readonly char[][] _space;
+
+		public long[,] Amplitude { get; set; }
+
+		public TachyonField(char[][] space)
+		{
+			_space = space;
+			_height = _space.Length;
+			_width = _space[0].Length;
+
+			Amplitude = new long[_height, _width];
+			Amplitude[0, _space[0].IndexOf(_source)] = 1; //source adds 1 to Amp at its position
+		}
+
+		public string Draw(int y)
+		{
+			var slice = "";
+			for (int i = 0; i < _width; i++)
+			{
+				slice += $"{Amplitude[y, i]} ";
+			}
+
+			return $"{new string(_space[y])} {slice}";
+		}
+
+		public long SumAmplitude(int y)
+		{
+			long sum = 0;
+			for (int i = 0; i < _width; i++)
+			{
+				sum += Amplitude[y, i];
+			}
+
+			return sum;
+		}
+
+		public void Propagate()
+		{
+			int dy;
+			for (int y = 0; y < _height - 1; y++)
+			{
+				dy = y + 1;
+				for (int x = 0; x < _width; x++)
+				{
+					if (Amplitude[y, x] != 0)
+					{
+						switch (_space[dy][x])
+						{
+							case _empty:
+							case _beam:
+								Amplitude[dy, x] += Amplitude[y, x];
+								_space[dy][x] = _beam;
+								break;
+
+							case _splitter:
+								Amplitude[dy, x - 1] += Amplitude[y, x];
+								Amplitude[dy, x + 1] += Amplitude[y, x];
+								_space[dy][x + 1] = _beam;
+								_space[dy][x - 1] = _beam;
+
+								break;
+						}
+					}
+				}
+			}
+		}
 	}
 }
