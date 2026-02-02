@@ -35,7 +35,7 @@ public partial class Point3d
 
 	public override string ToString()
 	{
-		return $"{X}, {Y}, {Z}";
+		return $"({X},{Y},{Z})";
 	}
 
 	[GeneratedRegex(@"(\d+),(\d+),(\d+)")]

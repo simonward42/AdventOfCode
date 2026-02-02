@@ -13,6 +13,7 @@ public class SolutionTests
 	public void Setup()
 	{
 		_sut = new Solution();
+		_sut.Verbose = true;
 	}
 
 	[TearDown]
@@ -40,6 +41,7 @@ public class SolutionTests
 	public void TestPart1_RealInput()
 	{
 		_sut = new Solution(_realInput);
+		_sut.Verbose = true;
 
 		var expectedAnswer = 102816;
 		var actualAnswer = _sut.GetPart1Answer();
