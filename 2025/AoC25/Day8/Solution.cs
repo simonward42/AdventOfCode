@@ -4,24 +4,11 @@ using System.Linq;
 
 using Shared.Util;
 
-public class Solution : Puzzle<int>
+public class Solution(IInputReader? reader = null) : Puzzle<int>(8, reader)
 {
 	public int JunctionsToConnect = 1000;
 
 	public bool Verbose = false;
-
-	private List<JunctionBox> _junctionBoxes = [];
-
-	public Solution(IInputReader? reader = null) : base(8, reader)
-	{
-		InputReader.Rewind();
-
-		while (InputReader.TryReadLine(out string? line))
-		{
-			_junctionBoxes.Add(new JunctionBox(new Point3d(line)));
-		}
-
-	}
 
 	/// <summary>
 	/// Solves part 1 of the problem by connecting junction boxes into circuits and calculating the product of the sizes of
@@ -36,12 +23,18 @@ public class Solution : Puzzle<int>
 	/// collection.</exception>
 	protected override int SolvePart1()
 	{
-		var boxPairs = _BuildPairDistanceStack();
+		List<JunctionBox> junctionBoxes = [];
+		while (InputReader.TryReadLine(out string? line))
+		{
+			junctionBoxes.Add(new JunctionBox(new Point3d(line)));
+		}
+
+		var boxPairs = _BuildPairDistanceStack(junctionBoxes);
 
 		var circuits = new List<Circuit>();
 		for (int i = 0; i < JunctionsToConnect; i++)
 		{
-			_MakeShortestConnection(_junctionBoxes, circuits, boxPairs, i + 1);
+			_MakeShortestConnection(junctionBoxes, circuits, boxPairs, i + 1);
 		}
 
 		return circuits
@@ -50,26 +43,51 @@ public class Solution : Puzzle<int>
 			.Aggregate(1, (result, x) => result * x.Size);
 	}
 
-	//description
+	/// <summary>
+	/// Continue part 1's connection loop until all boxes are within a single circuit. 
+	/// </summary>
+	/// <returns>The product of the X coordinates of the final box pair connected.</returns>
 	protected override int SolvePart2()
 	{
-		while (InputReader.TryReadLine(out string? currentLine))
-		{
+		List<JunctionBox> junctionBoxes = [];
 
+		while (InputReader.TryReadLine(out string? line))
+		{
+			junctionBoxes.Add(new JunctionBox(new Point3d(line)));
 		}
 
-		return 0;
+		var boxPairs = _BuildPairDistanceStack(junctionBoxes);
+
+		var circuits = new List<Circuit>();
+
+		int totalCircuits;
+		int connectionCount = 0;
+		int circuitsCount = 0;
+		int unconnected = junctionBoxes.Count;
+		JunctionBox box1;
+		JunctionBox box2;
+		do
+		{
+			(box1, box2) = _MakeShortestConnection(junctionBoxes, circuits, boxPairs, ++connectionCount);
+
+			circuitsCount = circuits.Count;
+			unconnected = junctionBoxes.Where(x => x.Circuit is null).Count();
+
+			totalCircuits = circuitsCount + unconnected;
+		} while (totalCircuits != 1);
+
+		return box1.Position.X * box2.Position.X;
 	}
 
-	private Stack<(JunctionBox, JunctionBox)> _BuildPairDistanceStack()
+	private Stack<(JunctionBox, JunctionBox)> _BuildPairDistanceStack(ICollection<JunctionBox> junctionBoxes)
 	{
 		var pairDistances = new Dictionary<double, (JunctionBox, JunctionBox)>();
 
 		var exclude = new List<JunctionBox>();
-		foreach (var box1 in _junctionBoxes)
+		foreach (var box1 in junctionBoxes)
 		{
 			exclude.Add(box1);
-			foreach (var box2 in _junctionBoxes.Except(exclude))
+			foreach (var box2 in junctionBoxes.Except(exclude))
 			{
 				var box1To2 = box1.Position.Distance(box2.Position);
 				pairDistances.Add(box1To2, (box1, box2));
@@ -82,7 +100,7 @@ public class Solution : Puzzle<int>
 				.Select(x => x.Value));
 	}
 
-	private void _MakeShortestConnection(List<JunctionBox> junctionBoxes, List<Circuit> circuits, Stack<(JunctionBox, JunctionBox)> boxPairs, int connectionCount)
+	private (JunctionBox, JunctionBox) _MakeShortestConnection(List<JunctionBox> junctionBoxes, List<Circuit> circuits, Stack<(JunctionBox, JunctionBox)> boxPairs, int connectionCount)
 	{
 		var (box1, box2) = boxPairs.Pop();
 		var circuit1 = box1.Circuit;
@@ -136,5 +154,7 @@ public class Solution : Puzzle<int>
 			throw new Exception($"remaining ({remaining}) + circuit size sum ({circuitSizeSum}) " +
 				$"does not equal box total: {junctionBoxes.Count}");
 		}
+
+		return (box1, box2);
 	}
 }
