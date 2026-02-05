@@ -2,7 +2,7 @@
 
 namespace Shared.Util;
 
-public partial class Point3d
+public class Point3d
 {
 	public Point3d() { }
 
@@ -13,7 +13,7 @@ public partial class Point3d
 
 	public Point3d(string commaSeparated)
 	{
-		var match = PointRegex().Match(commaSeparated);
+		var match = new Regex(@"(\d+),(\d+),(\d+)").Match(commaSeparated);
 
 		X = int.Parse(match.Groups[1].Value);
 		Y = int.Parse(match.Groups[2].Value);
@@ -37,7 +37,4 @@ public partial class Point3d
 	{
 		return $"({X},{Y},{Z})";
 	}
-
-	[GeneratedRegex(@"(\d+),(\d+),(\d+)")]
-	private static partial Regex PointRegex();
 }
