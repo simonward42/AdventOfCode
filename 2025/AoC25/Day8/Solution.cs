@@ -29,7 +29,7 @@ public class Solution(IInputReader? reader = null) : Puzzle<int>(8, reader)
 			junctionBoxes.Add(new JunctionBox(new Point3d(line)));
 		}
 
-		var boxPairs = _BuildPairDistanceStack(junctionBoxes);
+		var boxPairs = _BoxPairsOrderedByDistanceDescending(junctionBoxes);
 
 		var circuits = new List<Circuit>();
 		for (int i = 0; i < JunctionsToConnect; i++)
@@ -56,7 +56,7 @@ public class Solution(IInputReader? reader = null) : Puzzle<int>(8, reader)
 			junctionBoxes.Add(new JunctionBox(new Point3d(line)));
 		}
 
-		var boxPairs = _BuildPairDistanceStack(junctionBoxes);
+		var boxPairs = _BoxPairsOrderedByDistanceDescending(junctionBoxes);
 
 		var circuits = new List<Circuit>();
 
@@ -79,25 +79,14 @@ public class Solution(IInputReader? reader = null) : Puzzle<int>(8, reader)
 		return box1.Position.X * box2.Position.X;
 	}
 
-	private Stack<(JunctionBox, JunctionBox)> _BuildPairDistanceStack(ICollection<JunctionBox> junctionBoxes)
+	private Stack<(JunctionBox, JunctionBox)> _BoxPairsOrderedByDistanceDescending(ICollection<JunctionBox> junctionBoxes)
 	{
-		var pairDistances = new Dictionary<double, (JunctionBox, JunctionBox)>();
-
-		var exclude = new List<JunctionBox>();
-		foreach (var box1 in junctionBoxes)
-		{
-			exclude.Add(box1);
-			foreach (var box2 in junctionBoxes.Except(exclude))
-			{
-				var box1To2 = box1.Position.Distance(box2.Position);
-				pairDistances.Add(box1To2, (box1, box2));
-			}
-		}
+		var pairDistances = junctionBoxes.CalculatePairwiseMetric((x, y) => x.Position.Distance(y.Position));
 
 		return new Stack<(JunctionBox, JunctionBox)>(
 			pairDistances
-				.OrderByDescending(x => x.Key)
-				.Select(x => x.Value));
+				.OrderByDescending(x => x.Value)
+				.Select(x => x.Key));
 	}
 
 	private (JunctionBox, JunctionBox) _MakeShortestConnection(List<JunctionBox> junctionBoxes, List<Circuit> circuits, Stack<(JunctionBox, JunctionBox)> boxPairs, int connectionCount)
