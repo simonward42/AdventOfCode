@@ -45,14 +45,13 @@ public class SolutionTests
 		Assert.That(actualAnswer, Is.EqualTo(expectedAnswer));
 	}
 
-	//[Test]
-	//public void TestPart2()
-	//{
-	//	_sut.Verbose = true;
-	//	var expectedAnswer = 25272;
-	//	var actualAnswer = _sut.GetPart2Answer();
-	//	Assert.That(actualAnswer, Is.EqualTo(expectedAnswer));
-	//}
+	[Test]
+	public void TestPart2()
+	{
+		var expectedAnswer = 24;
+		var actualAnswer = _sut.GetPart2Answer();
+		Assert.That(actualAnswer, Is.EqualTo(expectedAnswer));
+	}
 
 	//[Test]
 	//public void TestPart2_RealInput()

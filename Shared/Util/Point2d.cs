@@ -41,4 +41,9 @@ public class Point2d
 
 		return point.X == X && point.Y == Y;
 	}
+
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(X, Y);
+    }
 }
