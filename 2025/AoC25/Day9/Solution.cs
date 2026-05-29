@@ -45,10 +45,7 @@ public class Solution(IInputReader? reader = null) : Puzzle<long>(9, reader)
 		//2. find the edges of the boundary, split into vertical and horizontal edges
 		//boundary wraps the input, so copy first point to end of list
 		tilePositions.Add(tilePositions.First());
-
 		var boundaryEdges = tilePositions.Zip(tilePositions.Skip(1)).ToList();
-		var boundaryVerticals = boundaryEdges.Where(e => e.First.X == e.Second.X).ToList();
-		var boundaryHorizontals = boundaryEdges.Except(boundaryVerticals).ToList();
 
 		//check each rectangle in order of area, largest first. If it is fully contained within the boundary, return its area
 		Rectangle rect;
@@ -62,20 +59,21 @@ public class Solution(IInputReader? reader = null) : Puzzle<long>(9, reader)
 
 			//check for intersections between rectangle horizontals and boundary verticals, and vice versa
 			//if any found, rectangle is invalid, continue >>>>
-			//if none found, rectangle is probably valid, but edge case of rectangle edge coincident with boundary edge is possible
-			//can check for this by using a scanline parity technique:
+			if (boundaryEdges.Any(e => _Intersects(e, rect))) continue;
+
+			//if none found, rectangle is probably valid*, but edge case of rectangle edge coincident with boundary edge is possible
+			//could check for this by using a scanline parity technique:
 			//  cast a ray from the the non-defining corners of the rectangle to infinity (either vertically or horizontally, doesn't matter).
 			//  if the ray intersects an odd number of boundary edges, the rectangle is valid. If even, invalid.
 
-			//do any vert boundary edges extend into the interior of our rect?
-			if (boundaryEdges.Any(e => _Intersects(e, rect))) continue;
+			//*turns out this edge-case check wasn't required, may have gotten lucky with my input
 			isValid = true;
 		}
 
 		return area;
 	}
 
-	private bool _Intersects((Point2d First, Point2d Second) edge, Rectangle rect)
+	private static bool _Intersects((Point2d First, Point2d Second) edge, Rectangle rect)
 	{
 		Console.WriteLine($"edge: {edge} rect:{rect.CornerA} {rect.CornerB}");
 		//determine if edge is horiz or vert

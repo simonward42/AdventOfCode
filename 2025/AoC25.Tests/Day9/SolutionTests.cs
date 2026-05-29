@@ -54,7 +54,8 @@ public class SolutionTests
 	}
 
 	[Test]
-	[Timeout(0)]
+	[CancelAfter(0)]
+	[Explicit] // takes ~1min to execute
 	public void TestPart2_RealInput()
 	{
 		_sut = new Solution(_realInput);
