@@ -53,14 +53,14 @@ public class SolutionTests
 		Assert.That(actualAnswer, Is.EqualTo(expectedAnswer));
 	}
 
-	//[Test]
-	//public void TestPart2_RealInput()
-	//{
-	//	_sut = new Solution(_realInput);
-	//	_sut.Verbose = true;
+	[Test]
+	[Timeout(0)]
+	public void TestPart2_RealInput()
+	{
+		_sut = new Solution(_realInput);
 
-	//	var expectedAnswer = 100011612;
-	//	var actualAnswer = _sut.GetPart2Answer();
-	//	Assert.That(actualAnswer, Is.EqualTo(expectedAnswer));
-	//}
+		var expectedAnswer = 1562459680;
+		var actualAnswer = _sut.GetPart2Answer();
+		Assert.That(actualAnswer, Is.EqualTo(expectedAnswer));
+	}
 }
