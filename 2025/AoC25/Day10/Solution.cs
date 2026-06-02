@@ -41,13 +41,27 @@ public class Solution(IInputReader? reader = null) : Puzzle<int>(10, reader)
 
 			//buttons parse
 			var buttons = _ParseButtons(l, input);
-			b = buttons.Count;
+			b = buttons.Length;
+
+			//solving
+			//construct button matrix from button vectors
+			int[,] mB = buttons.ToRectangular();
+
+			//solving linear algebra equation: (mB.p)mod 2 = t,
+			//where:
+			//  mB is button matrix
+			//  p is the press vector (0 or 1 presses for each button i.e. column vector of length b where elements are [0,1])
+			//  t is the target light state vector (on/off for each light i.e. column vector of length l where elems are [0,1])
+
+			//we will brute force by constructing every possible press vector
+			//for each p that solves the equation, count the number of presses => sum its elements
+			//return the smallest of these sums => the smallest number of presses that reaches the target state
 		}
 
 		return sumOfBest;
 	}
 
-	private static List<int[]> _ParseButtons(int l, string[] input)
+	private static int[][] _ParseButtons(int l, string[] input)
 	{
 		List<int[]> buttons = [];
 
@@ -65,7 +79,7 @@ public class Solution(IInputReader? reader = null) : Puzzle<int>(10, reader)
 				.Select(i => indices.Contains(i) ? 1 : 0)
 				.ToArray());
 		}
-		return buttons;
+		return buttons.ToArray();
 	}
 
 	private static int[] _ParseTarget(string[] input)

@@ -36,4 +36,21 @@ public static class CollectionExtensions
 	{
 		return $"[{string.Join(", ", collection)}]";
 	}
+
+	public static T[,] ToRectangular<T>(this T[][] source)
+	{
+		int rows = source.Length;
+		int cols = source[0].Length;
+
+		if (source.Any(r => r.Length != cols))
+			throw new ArgumentException("All rows must have equal length");
+
+		var result = new T[rows, cols];
+
+		for (int i = 0; i < rows; i++)
+			for (int j = 0; j < cols; j++)
+				result[i, j] = source[i][j];
+
+		return result;
+	}
 }
