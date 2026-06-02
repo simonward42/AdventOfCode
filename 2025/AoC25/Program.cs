@@ -9,4 +9,5 @@ using AoC = AoC25;
 //Console.WriteLine($"{new AoC.Day6.Solution().SolvePretty()}");
 //Console.WriteLine($"{new AoC.Day7.Solution().SolvePretty()}");
 //Console.WriteLine($"{new AoC.Day8.Solution().SolvePretty()}");
-Console.WriteLine($"{new AoC.Day9.Solution().SolvePretty()}");
+//Console.WriteLine($"{new AoC.Day9.Solution().SolvePretty()}");
+Console.WriteLine($"{new AoC.Day10.Solution().SolvePretty()}");
