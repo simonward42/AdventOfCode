@@ -26,29 +26,31 @@ public class Solution(IInputReader? reader = null) : Puzzle<int>(10, reader)
 	 */
 	protected override int SolvePart1()
 	{
-
 		int sumOfBest = 0;
 		while (InputReader.TryReadLine(out string? currentLine))
 		{
 			int[] target; //target light state
-			List<int[]> buttons = [];
 			int l; //number of lights
 			int b; //number of buttons
 
 			var input = currentLine.Split(' ');
 
 			//target parse
-			l = _ParseTarget(out target, input);
+			target = _ParseTarget(input);
+			l = target.Length;
 
 			//buttons parse
-			b = _ParseButtons(buttons, l, input);
+			var buttons = _ParseButtons(l, input);
+			b = buttons.Count;
 		}
 
 		return sumOfBest;
 	}
 
-	private static int _ParseButtons(List<int[]> buttons, int l, string[] input)
+	private static List<int[]> _ParseButtons(int l, string[] input)
 	{
+		List<int[]> buttons = [];
+
 		var buttonWords = input[1..(input.Length - 1)];
 		foreach (var buttonWord in buttonWords)
 		{
@@ -63,17 +65,15 @@ public class Solution(IInputReader? reader = null) : Puzzle<int>(10, reader)
 				.Select(i => indices.Contains(i) ? 1 : 0)
 				.ToArray());
 		}
-		return buttons.Count;
+		return buttons;
 	}
 
-	private static int _ParseTarget(out int[] target, string[] input)
+	private static int[] _ParseTarget(string[] input)
 	{
 		var targetRegex = new Regex(@"\[([.#]+)\]");
 
 		var match = targetRegex.Match(input.First());
-		target = [.. match.Groups[1].Value.Select(c => c == '#' ? 1 : 0)];
-
-		return target.Length;
+		return [.. match.Groups[1].Value.Select(c => c == '#' ? 1 : 0)];
 	}
 
 	protected override int SolvePart2()
