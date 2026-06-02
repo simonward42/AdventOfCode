@@ -31,4 +31,9 @@ public static class CollectionExtensions
 				from item in sequence
 				select acc.Concat([item]));
 	}
+
+	public static string PrettyPrint<T>(this ICollection<T> collection)
+	{
+		return $"[{string.Join(", ", collection)}]";
+	}
 }
