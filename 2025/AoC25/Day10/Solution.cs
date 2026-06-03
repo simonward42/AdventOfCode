@@ -113,11 +113,13 @@ public class Solution(IInputReader? reader = null) : Puzzle<int>(10, reader)
 
 	protected override int SolvePart2()
 	{
+		int sumOfBest = 0;
+
 		while (InputReader.TryReadLine(out string? currentLine))
 		{
 
 		}
 
-		return 0;
+		return sumOfBest;
 	}
 }

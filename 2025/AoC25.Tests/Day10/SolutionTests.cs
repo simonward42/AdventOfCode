@@ -6,6 +6,9 @@ using Shared.Util;
 
 public class SolutionTests
 {
+	const string _exampleFirstLine = "[.##.] (3) (1,3) (2) (2,3) (0,2) (0,1) {3,5,4,7}";
+	const string _exampleSecondLine = "[...#.] (0,2,3,4) (2,3) (0,4) (0,1,2) (1,2,3,4) {7,5,12,7,2}";
+	const string _exampleThirdLine = "[.###.#] (0,1,2,3,4) (0,3,4) (0,1,2,4,5) (1,2) {10,11,11,5,10,5}";
 	Solution _sut;
 	IInputReader _realInput = new InputFileReader(@"Day10/realInput.txt");
 
@@ -96,7 +99,7 @@ public class SolutionTests
 	[Test]
 	public void TestPart1_FirstLine()
 	{
-		_sut = new Solution(new InputStringReader("[.##.] (3) (1,3) (2) (2,3) (0,2) (0,1) {3,5,4,7}"));
+		_sut = new Solution(new InputStringReader(_exampleFirstLine));
 		var expectedAnswer = 2;
 		var actualAnswer = _sut.GetPart1Answer();
 		Assert.That(actualAnswer, Is.EqualTo(expectedAnswer));
@@ -105,7 +108,7 @@ public class SolutionTests
 	[Test]
 	public void TestPart1_SecondLine()
 	{
-		_sut = new Solution(new InputStringReader("[...#.] (0,2,3,4) (2,3) (0,4) (0,1,2) (1,2,3,4) {7,5,12,7,2}"));
+		_sut = new Solution(new InputStringReader(_exampleSecondLine));
 		var expectedAnswer = 3;
 		var actualAnswer = _sut.GetPart1Answer();
 		Assert.That(actualAnswer, Is.EqualTo(expectedAnswer));
@@ -114,7 +117,7 @@ public class SolutionTests
 	[Test]
 	public void TestPart1_ThirdLine()
 	{
-		_sut = new Solution(new InputStringReader("[.###.#] (0,1,2,3,4) (0,3,4) (0,1,2,4,5) (1,2) {10,11,11,5,10,5}"));
+		_sut = new Solution(new InputStringReader(_exampleThirdLine));
 		var expectedAnswer = 2;
 		var actualAnswer = _sut.GetPart1Answer();
 		Assert.That(actualAnswer, Is.EqualTo(expectedAnswer));
@@ -138,13 +141,41 @@ public class SolutionTests
 		Assert.That(actualAnswer, Is.EqualTo(expectedAnswer));
 	}
 
-	//[Test]
-	//public void TestPart2()
-	//{
-	//	var expectedAnswer = 24;
-	//	var actualAnswer = _sut.GetPart2Answer();
-	//	Assert.That(actualAnswer, Is.EqualTo(expectedAnswer));
-	//}
+
+	[Test]
+	public void TestPart2_FirstLine()
+	{
+		_sut = new Solution(new InputStringReader(_exampleFirstLine));
+		var expectedAnswer = 10;
+		var actualAnswer = _sut.GetPart2Answer();
+		Assert.That(actualAnswer, Is.EqualTo(expectedAnswer));
+	}
+
+	[Test]
+	public void TestPart2_SecondLine()
+	{
+		_sut = new Solution(new InputStringReader(_exampleSecondLine));
+		var expectedAnswer = 12;
+		var actualAnswer = _sut.GetPart2Answer();
+		Assert.That(actualAnswer, Is.EqualTo(expectedAnswer));
+	}
+
+	[Test]
+	public void TestPart2_ThirdLine()
+	{
+		_sut = new Solution(new InputStringReader(_exampleThirdLine));
+		var expectedAnswer = 11;
+		var actualAnswer = _sut.GetPart2Answer();
+		Assert.That(actualAnswer, Is.EqualTo(expectedAnswer));
+	}
+
+	[Test]
+	public void TestPart2()
+	{
+		var expectedAnswer = 33;
+		var actualAnswer = _sut.GetPart2Answer();
+		Assert.That(actualAnswer, Is.EqualTo(expectedAnswer));
+	}
 
 	//[Test]
 	//[CancelAfter(0)]
