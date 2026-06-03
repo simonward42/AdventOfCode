@@ -73,6 +73,26 @@ public class SolutionTests
 		Assert.That(threeBits.CartesianProduct(), Is.EqualTo(expected));
 	}
 
+
+	[Test]
+	public void CartesianProduct_with_repeat()
+	{
+		int[] bit = [0, 1];
+
+		IEnumerable<IEnumerable<int>> expected = [
+			[0, 0, 0],
+			[0, 0, 1],
+			[0, 1, 0],
+			[0, 1, 1],
+			[1, 0, 0],
+			[1, 0, 1],
+			[1, 1, 0],
+			[1, 1, 1]];
+
+		Assert.That(bit.CartesianProduct(repeat: 3), Is.EqualTo(expected));
+
+	}
+
 	[Test]
 	public void TestPart1_FirstLine()
 	{
@@ -108,15 +128,15 @@ public class SolutionTests
 		Assert.That(actualAnswer, Is.EqualTo(expectedAnswer));
 	}
 
-	//[Test]
-	//public void TestPart1_RealInput()
-	//{
-	//	_sut = new Solution(_realInput);
+	[Test]
+	public void TestPart1_RealInput()
+	{
+		_sut = new Solution(_realInput);
 
-	//	var expectedAnswer = 4741451444;
-	//	var actualAnswer = _sut.GetPart1Answer();
-	//	Assert.That(actualAnswer, Is.EqualTo(expectedAnswer));
-	//}
+		var expectedAnswer = 477;
+		var actualAnswer = _sut.GetPart1Answer();
+		Assert.That(actualAnswer, Is.EqualTo(expectedAnswer));
+	}
 
 	//[Test]
 	//public void TestPart2()

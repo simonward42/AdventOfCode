@@ -6,38 +6,20 @@ using Shared.Util;
 
 public class Solution(IInputReader? reader = null) : Puzzle<int>(10, reader)
 {
-	/*
-	 from itertools import product
-
-	def brute_force_min(A, b):
-		n = len(A[0])
-		best = None
-
-		for x in product([0,1], repeat=n):
-			if all(
-				sum(A[r][c] * x[c] for c in range(n)) % 2 == b[r]
-				for r in range(len(A))
-			):
-				presses = sum(x)
-				if best is None or presses < best:
-					best = presses
-
-		return best
-	 */
 	protected override int SolvePart1()
 	{
 		int sumOfBest = 0;
 		while (InputReader.TryReadLine(out string? currentLine))
 		{
-			int[] target; //target light state
+			int[] t; //target light state
 			int l; //number of lights
 			int b; //number of buttons
 
 			var input = currentLine.Split(' ');
 
 			//target parse
-			target = _ParseTarget(input);
-			l = target.Length;
+			t = _ParseTarget(input);
+			l = t.Length;
 
 			//buttons parse
 			var buttons = _ParseButtons(l, input);
@@ -47,7 +29,7 @@ public class Solution(IInputReader? reader = null) : Puzzle<int>(10, reader)
 			//construct button matrix from button vectors
 			int[,] mB = buttons.ToRectangular();
 
-			//solving linear algebra equation: (mB.p)mod 2 = t,
+			//solving linear algebra equation: (mB.p)mod2=t 
 			//where:
 			//  mB is button matrix
 			//  p is the press vector (0 or 1 presses for each button i.e. column vector of length b where elements are [0,1])
@@ -56,6 +38,45 @@ public class Solution(IInputReader? reader = null) : Puzzle<int>(10, reader)
 			//we will brute force by constructing every possible press vector
 			//for each p that solves the equation, count the number of presses => sum its elements
 			//return the smallest of these sums => the smallest number of presses that reaches the target state
+
+			//1. generate the set of press vector possibilities
+			//each button can be pressed 0 or 1 times: more than 1 press is redundant as 2 presses is the same as 0, i.e. we're working mod 2
+			//the press vectors are the Cartesian product of b [0,1] vectors
+			var pCandidates = Enumerable.Range(0, 2) //[0,1]
+				.CartesianProduct(repeat: b)
+				.Skip(1) //first element is 0 presses which will never be the solution
+				.Select(p => p.ToArray());
+
+			//2. for each candidate p that satisfies the equation, find the least number of presses, i.e. lowest sum of elements
+			//NB addition mod 2 is equivalent to XOR:
+			//x+ymod2 = x^y
+			int? best = null;
+			foreach (var p in pCandidates)
+			{
+				//early skip: no need to check for solution if presses are already worse
+				var presses = p.Sum();
+				if (best != null && presses >= best)
+					continue;
+
+				//Does p solve?
+				var solves = true; //until proven otherwise...
+				for (int r = 0; r < l && solves; r++)
+				{
+					int sum = 0;
+
+					for (int c = 0; c < b; c++)
+					{
+						sum ^= mB[c, r] * p[c]; //I think I'm needing to transpose the matrix here: [c,r] rather than [r,c] but I might be crazy
+					}
+
+					if (sum != t[r])
+						solves = false;
+				}
+
+				if (solves)
+					best = presses; //already would have skipped if presses > best, so p must be best
+			}
+			sumOfBest += best!.Value;
 		}
 
 		return sumOfBest;

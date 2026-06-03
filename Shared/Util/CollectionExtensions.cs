@@ -32,6 +32,17 @@ public static class CollectionExtensions
 				select acc.Concat([item]));
 	}
 
+	//see https://docs.python.org/3/library/itertools.html#itertools.product
+	public static IEnumerable<IEnumerable<T>> CartesianProduct<T>(this IEnumerable<T> sequence, int repeat)
+	{
+		if (repeat < 0)
+			throw new ArgumentException("repeat arg cannot be negative");
+
+		return Enumerable
+			.Repeat(sequence, repeat)
+			.CartesianProduct();
+	}
+
 	public static string PrettyPrint<T>(this ICollection<T> collection)
 	{
 		return $"[{string.Join(", ", collection)}]";
